@@ -1,13 +1,22 @@
 package models
 
-import play.api.libs.functional.syntax._
-import play.api.libs.json.{JsPath, Writes}
+import reactivemongo.bson.BSONObjectID
+
+trait Entity {
+  def id: Option[BSONObjectID]
+}
+
+object JsonFormats{
+  import play.api.libs.json._
+
+  implicit val todoFormat: OFormat[User] = Json.format[User]
+}
 
 object User {
   implicit val favouriteStudioWrites: Writes[User] = (
-    (JsPath \ "userId").write[Int] and
-      (JsPath \ "studioId").write[Int]
+    (JsPath \ "id").write[Long] and
+      (JsPath \ "title").write[String]
     )(unlift(User.unapply))
 }
 
-case class User(userId: Int, studioId: Int)
+case class User(id: Option[BSONObjectID], title: String) extends Entity

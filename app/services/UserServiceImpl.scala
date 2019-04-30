@@ -2,21 +2,12 @@ package services
 
 import javax.inject.{Inject, Singleton}
 import models.User
-import repositories.dao.UserDAO
+import reactivemongo.bson.BSONObjectID
+import repositories.UserRepository
 
 @Singleton
-class UserServiceImpl @Inject()(userDAO: UserDAO) extends UserService {
-  def create(userId: Int, studioId: Int): User = {
-    val user = User(userId, studioId)
+class UserServiceImpl @Inject()(userRepo: UserRepository) extends UserService {
 
-    userDAO.add(user)
-
-    user
-  }
-
-  override def find(userId: Int, studioId: Int): Option[User] = {
-    val user = User(userId, studioId)
-
-    Some(user).filter(userDAO.exists)
-  }
+  override def getAll: Seq[User] = ???
+  override def getOne(id: BSONObjectID): Option[User] = ???
 }

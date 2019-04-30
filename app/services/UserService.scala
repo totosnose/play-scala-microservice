@@ -1,8 +1,11 @@
 package services
 
+import com.google.inject.ImplementedBy
 import models.User
+import reactivemongo.bson.BSONObjectID
 
+@ImplementedBy(classOf[UserServiceImpl])
 trait UserService {
-  def create(userId: Int, studioId: Int): User
-  def find(userId: Int, studioId: Int): Option[User]
+  def getAll: Seq[User]
+  def getOne(id: BSONObjectID): Option[User]
 }
