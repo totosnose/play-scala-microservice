@@ -3,6 +3,10 @@
 # https://www.playframework.com/documentation/latest/ScalaRouting
 # ~~~~
 
+# API Endpoints
+POST    /users/:userId/user/:studioId   controllers.UserController.create(userId: Int, studioId: Int)
+GET     /users/:userId/user/:studioId   controllers.UserController.find(userId: Int, studioId: Int)
+
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index
 
