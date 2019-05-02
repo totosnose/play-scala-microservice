@@ -1,13 +1,12 @@
 package services
 
-import com.google.inject.ImplementedBy
 import models.User
-import reactivemongo.bson.BSONObjectID
+import reactivemongo.api.commands.WriteResult
 
 import scala.concurrent.Future
 
-@ImplementedBy(classOf[UserServiceImpl])
 trait UserService {
-  def getAll: Seq[User]
+  def getAll: Future[Seq[User]]
   def getOne(id: String): Future[Option[User]]
+  def add(user: User): Future[WriteResult]
 }

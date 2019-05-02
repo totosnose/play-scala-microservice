@@ -1,13 +1,12 @@
 package repositories
 
-import com.google.inject.ImplementedBy
 import models.User
-import reactivemongo.bson.BSONObjectID
+import reactivemongo.api.commands.WriteResult
 
 import scala.concurrent.Future
 
-@ImplementedBy(classOf[UserRepositoryImpl])
 trait UserRepository {
   def findAll(limit: Int): Future[Seq[User]]
   def findOne(id: String): Future[Option[User]]
+  def insert(user: User): Future[WriteResult]
 }

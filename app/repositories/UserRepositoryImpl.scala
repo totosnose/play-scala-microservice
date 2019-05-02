@@ -4,8 +4,9 @@ import javax.inject.{Inject, Singleton}
 import models.User
 import play.api.libs.json.{JsObject, Json}
 import play.modules.reactivemongo.ReactiveMongoApi
+import reactivemongo.api.commands.WriteResult
 import reactivemongo.api.{Cursor, ReadPreference}
-import reactivemongo.bson.{BSONDocument, BSONObjectID}
+import reactivemongo.bson.BSONDocument
 import reactivemongo.play.json._
 import reactivemongo.play.json.collection.JSONCollection
 
@@ -32,6 +33,9 @@ class UserRepositoryImpl @Inject()(implicit ec: ExecutionContext, reactiveMongoA
       selector = BSONDocument("_id" -> id),
       projection = Option.empty[BSONDocument])
       .one[User])
+
+  def insert(user: User): Future[WriteResult] =
+    usersCollection.flatMap(_.insert(false).one(user))
 }
 
 
