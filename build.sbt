@@ -13,7 +13,7 @@ libraryDependencies ++= Seq(
   "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.1" % Test,
   "org.reactivemongo" %% "play2-reactivemongo" % "0.16.5-play27",
   "io.swagger" %% "swagger-play2" % "1.7.1",
-//  "org.webjars" %  "swagger-ui" % "3.2.2"
+  "org.webjars" %  "swagger-ui" % "3.2.2"
 )
 
 import play.sbt.routes.RoutesKeys

@@ -2,7 +2,7 @@ package controllers
 
 import io.swagger.annotations._
 import javax.inject.{Singleton, Inject}
-//import models.JsonFormats._
+import models.JsonFormats._
 import models.User
 import play.api.libs.json.Json
 import play.api.mvc._
@@ -22,9 +22,9 @@ class UserController @Inject()(userService: UserService, cc: ControllerComponent
 //    }
 //  }
 
-  @ApiOperation(value = "Get a Todo", response = classOf[User])
-  @ApiResponses(Array(new ApiResponse(code = 404, message = "Todo not found")))
-  def getUser(@ApiParam(value = "The id of the Todo to fetch") id: String) = Action.async {
+  @ApiOperation(value = "Get a User", response = classOf[User])
+  @ApiResponses(Array(new ApiResponse(code = 404, message = "User not found")))
+  def getUser(@ApiParam(value = "The id of the User to fetch") id: String) = Action.async {
     userService.getOne(id).map { maybeUser =>
       maybeUser.map { user =>
         Ok(Json.toJson(user))

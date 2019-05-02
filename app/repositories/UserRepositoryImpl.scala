@@ -15,7 +15,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class UserRepositoryImpl @Inject()(implicit ec: ExecutionContext, reactiveMongoApi: ReactiveMongoApi) extends UserRepository {
 
-//  import models.JsonFormats._
+  import models.JsonFormats._
 
   def usersCollection: Future[JSONCollection] = reactiveMongoApi.database.map(_.collection("users"))
 
