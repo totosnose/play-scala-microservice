@@ -5,7 +5,7 @@
 
 # API Endpoints
 #GET     /users                          controllers.UserController.getAllUsers
-GET     /users/:id                      controllers.UserController.getUser(id: reactivemongo.bson.BSONObjectID)
+GET     /users/:id                      controllers.UserController.getUser(id: String)
 
 #POST    /users/:userId/user/:studioId   controllers.UserController.create(userId: Int, studioId: Int)
 #GET     /users/:userId/user/:studioId   controllers.UserController.find(userId: Int, studioId: Int)

@@ -9,5 +9,5 @@ import scala.concurrent.Future
 @ImplementedBy(classOf[UserRepositoryImpl])
 trait UserRepository {
   def findAll(limit: Int): Future[Seq[User]]
-  def findOne(id: BSONObjectID): Future[Option[User]]
+  def findOne(id: String): Future[Option[User]]
 }

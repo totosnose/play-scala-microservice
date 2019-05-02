@@ -15,7 +15,7 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class UserRepositoryImpl @Inject()(implicit ec: ExecutionContext, reactiveMongoApi: ReactiveMongoApi) extends UserRepository {
 
-  import models.JsonFormats._
+//  import models.JsonFormats._
 
   def usersCollection: Future[JSONCollection] = reactiveMongoApi.database.map(_.collection("users"))
 
@@ -27,7 +27,7 @@ class UserRepositoryImpl @Inject()(implicit ec: ExecutionContext, reactiveMongoA
       .collect[Seq](limit, Cursor.FailOnError[Seq[User]]())
     )
 
-  def findOne(id: BSONObjectID): Future[Option[User]] =
+  def findOne(id: String): Future[Option[User]] =
     usersCollection.flatMap(_.find(
       selector = BSONDocument("_id" -> id),
       projection = Option.empty[BSONDocument])
