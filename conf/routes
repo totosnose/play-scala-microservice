@@ -6,6 +6,9 @@
 # API Endpoints
 GET     /users                          controllers.UserController.getAllUsers
 GET     /users/:id                      controllers.UserController.getUser(id: String)
+POST    /users                          controllers.UserController.createUser
+PATCH   /users/:id                      controllers.UserController.updateUser(id: String)
+DELETE  /users/:id                      controllers.UserController.deleteUser(id: String)
 
 # An example controller showing a sample home page
 #GET     /                           controllers.HomeController.index

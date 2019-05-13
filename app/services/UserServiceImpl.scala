@@ -14,5 +14,9 @@ class UserServiceImpl @Inject()(userRepo: UserRepository) extends UserService {
 
   override def getOne(id: String): Future[Option[User]] = userRepo.findOne(id)
 
-  override def add(user: User): Future[WriteResult] = userRepo.insert(user)
+  override def create(user: User): Future[WriteResult] = userRepo.insert(user)
+
+  override def update(id: String, user: User): Future[Option[User]] = userRepo.update(id, user)
+
+  override def delete(id: String): Future[Option[User]] = userRepo.delete(id)
 }

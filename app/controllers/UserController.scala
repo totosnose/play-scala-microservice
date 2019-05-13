@@ -24,8 +24,8 @@ class UserController @Inject()(userService: UserService, cc: ControllerComponent
 
   @ApiOperation(value = "Get a User", response = classOf[User])
   @ApiResponses(Array(new ApiResponse(code = 404, message = "User not found")))
-  def getUser(@ApiParam(value = "The id of the User to fetch") id: String): Action[AnyContent] = Action.async {
-    userService.getOne(id).map { maybeUser =>
+  def getUser(@ApiParam(value = "The id of the User to fetch") userId: String): Action[AnyContent] = Action.async {
+    userService.getOne(userId).map { maybeUser =>
       maybeUser.map { user =>
         Ok(Json.toJson(user))
       }.getOrElse(NotFound)
@@ -34,13 +34,32 @@ class UserController @Inject()(userService: UserService, cc: ControllerComponent
 
   @ApiOperation(value = "Add a new User to the list", response = classOf[Void], code = 201)
   @ApiResponses(Array(new ApiResponse(code = 400, message = "Invalid User format")))
-  @ApiImplicitParams(Array(new ApiImplicitParam(value = "The User to add, in Json Format",
-    required = true, dataType = "models.User", paramType = "body")))
-  def createTodo(): Action[JsValue] = Action.async(parse.json) {
+  @ApiImplicitParams(Array(new ApiImplicitParam(value = "The User to add, in Json Format", required = true, dataType = "models.User", paramType = "body")))
+  def createUser(): Action[JsValue] = Action.async(parse.json) {
     _.body.validate[User].map { user =>
-      userService.add(user).map { _ =>
+      userService.create(user).map { _ =>
         Created
       }
-    }.getOrElse(Future.successful(BadRequest("Invalid Todo format")))
+    }.getOrElse(Future.successful(BadRequest("Invalid User format")))
+  }
+
+  @ApiOperation(value = "Update a User", response = classOf[User])
+  @ApiResponses(Array(new ApiResponse(code = 400, message = "Invalid User format")))
+  @ApiImplicitParams(Array(new ApiImplicitParam(value = "The updated User, in Json Format", required = true, dataType = "models.User", paramType = "body")))
+  def updateUser(@ApiParam(value = "The id of the User to update") userId: String): Action[JsValue] = Action.async(parse.json){ req =>
+    req.body.validate[User].map { user =>
+      userService.update(userId, user).map {
+        case Some(`user`) => Ok(Json.toJson(user))
+        case _ => NotFound
+      }
+    }.getOrElse(Future.successful(BadRequest("Invalid Json")))
+  }
+
+  @ApiOperation(value = "Delete a User",response = classOf[User]  )
+  def deleteUser(@ApiParam(value = "The id of the User to delete") userId: String): Action[AnyContent] = Action.async { req =>
+    userService.delete(userId).map {
+      case Some(user) => Ok(Json.toJson(user))
+      case _ => NotFound
+    }
   }
 }

@@ -5,7 +5,7 @@ trait BaseEntity {
   def id: Option[String]
 }
 
-case class User(id: Option[String], name: String) extends BaseEntity
+case class User(id: Option[String], name: String, confirmed: Option[Boolean]) extends BaseEntity
 
 object JsonFormats{
   import play.api.libs.json.{OFormat, Json}
